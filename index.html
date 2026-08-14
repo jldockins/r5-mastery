@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#141618">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="R5 Mastery">
+<meta name="description" content="A checklist for learning every feature of the Canon EOS R5.">
+<title>R5 Mastery</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#141618; --panel:#1D2023; --panelHi:#24282C; --line:#2E3338;
+    --text:#E9E7E2; --muted:#878E95; --accent:#D45FA6;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;background:var(--bg);color:var(--text);}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    padding-bottom:calc(48px + env(safe-area-inset-bottom));
+    -webkit-font-smoothing:antialiased;
+  }
+  .dsp{font-family:'Barlow Condensed','Oswald',Impact,sans-serif;letter-spacing:.04em;}
+  .mono{font-family:'Roboto Mono',ui-monospace,monospace;}
+  button{font-family:inherit;cursor:pointer;}
+  button:focus-visible{outline:2px solid var(--text);outline-offset:2px;}
+
+  header{
+    padding:calc(22px + env(safe-area-inset-top)) 18px 16px;
+    border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,#191C1F 0%,#141618 100%);
+    position:sticky;top:0;z-index:10;
+  }
+  .eyebrow{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.22em;}
+  h1{font-size:30px;font-weight:700;line-height:1.05;margin:2px 0 0;}
+  #meter{display:flex;gap:2px;align-items:flex-end;height:26px;margin-top:16px;}
+  #meter i{flex:1;border-radius:1px;background:var(--line);opacity:.55;transition:background .25s ease,opacity .25s ease;}
+  #meter i.major{height:100%;}
+  #meter i.minor{height:62%;}
+  #meter i.lit{background:var(--accent);opacity:1;}
+  .meterLabels{display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--muted);}
+  .meterLabels b{color:var(--accent);font-weight:500;}
+
+  nav{display:flex;overflow-x:auto;gap:6px;padding:12px 14px;border-bottom:1px solid var(--line);scrollbar-width:none;}
+  nav::-webkit-scrollbar{display:none;}
+  nav button{
+    flex:0 0 auto;background:transparent;color:var(--muted);border:1px solid var(--line);
+    border-radius:4px;padding:7px 12px;font-size:14px;font-weight:600;
+    text-transform:uppercase;letter-spacing:.1em;
+  }
+  nav button.complete{color:var(--accent);}
+  nav button.active{background:var(--accent);color:#141618;border-color:var(--accent);}
+  nav button span{font-size:10px;margin-left:6px;opacity:.75;}
+
+  .sectionHead{padding:20px 18px 6px;}
+  .sectionHead h2{margin:0;font-size:26px;font-weight:700;text-transform:uppercase;color:var(--accent);}
+  .sectionHead p{margin:8px 0 0;font-size:14px;line-height:1.55;color:var(--muted);}
+
+  .filters{display:flex;gap:8px;padding:14px 18px 6px;align-items:center;}
+  .filters button{background:transparent;color:var(--muted);border:1px solid transparent;border-radius:20px;padding:6px 14px;font-size:13px;}
+  .filters button.on{background:var(--panelHi);color:var(--text);border-color:var(--line);}
+  .filters .count{margin-left:auto;font-size:11px;color:var(--muted);}
+
+  #list{padding:8px 14px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--line);border-radius:6px;margin-bottom:10px;overflow:hidden;}
+  .card.open{border-color:var(--accent);}
+  .card.done{border-left-color:var(--accent);}
+  .row{display:flex;align-items:flex-start;}
+  .tickBtn{background:none;border:none;padding:16px 10px 16px 14px;}
+  .tick{
+    display:flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;
+    border:2px solid #4A5158;color:#141618;font-size:13px;font-weight:700;
+  }
+  .done .tick{border-color:var(--accent);background:var(--accent);}
+  .titleBtn{flex:1;text-align:left;background:none;border:none;color:var(--text);padding:16px 14px 16px 0;}
+  .done .titleBtn{color:var(--muted);}
+  .titleBtn .t{font-size:15.5px;font-weight:500;line-height:1.35;display:block;}
+  .done .titleBtn .t{text-decoration:line-through;}
+  .titleBtn .sub{font-size:11px;color:var(--muted);margin-top:6px;display:block;}
+
+  .detail{padding:0 16px 18px 47px;}
+  .whereBox{background:var(--panelHi);border-radius:5px;padding:11px 12px;margin-bottom:14px;}
+  .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.16em;margin-bottom:5px;}
+  .lbl.accent{color:var(--accent);}
+  .lbl.muted{color:var(--muted);margin-bottom:10px;}
+  .whereBox div:last-child{font-size:13.5px;line-height:1.55;}
+  .opt{padding-bottom:11px;margin-bottom:11px;border-bottom:1px solid var(--line);}
+  .opt:last-of-type{border-bottom:none;}
+  .opt .n{font-size:14px;font-weight:600;margin-bottom:3px;}
+  .opt .u{font-size:13.5px;line-height:1.55;color:var(--muted);}
+  .tip{margin-top:6px;padding-left:12px;border-left:2px solid var(--accent);font-size:13.5px;line-height:1.55;color:#C6C9CC;font-style:italic;}
+  .markBtn{
+    margin-top:18px;width:100%;background:var(--accent);color:#141618;border:1px solid var(--accent);
+    border-radius:5px;padding:11px;font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;
+  }
+  .done .markBtn{background:transparent;color:var(--muted);border-color:var(--line);}
+
+  .empty{padding:36px 16px;text-align:center;color:var(--muted);font-size:14px;line-height:1.6;}
+  footer{padding:18px;font-size:12px;line-height:1.6;color:#5F666C;border-top:1px solid var(--line);margin-top:20px;}
+  footer button{background:none;border:none;color:#5F666C;text-decoration:underline;padding:0;font-size:12px;margin-top:10px;}
+  @media (prefers-reduced-motion:reduce){*{transition:none !important;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="dsp eyebrow">Canon EOS R5</div>
+  <h1 class="dsp">MASTERY METER</h1>
+  <div id="meter"></div>
+  <div class="meterLabels mono"><span id="meterCount"></span><b id="meterPct"></b></div>
+</header>
+
+<nav id="tabs"></nav>
+
+<div class="sectionHead">
+  <h2 class="dsp" id="secName"></h2>
+  <p id="secBlurb"></p>
+</div>
+
+<div class="filters">
+  <button data-f="all" class="on">All</button>
+  <button data-f="todo">To learn</button>
+  <button data-f="done">Learned</button>
+  <span class="count mono" id="secCount"></span>
+</div>
+
+<div id="list"></div>
+
+<footer>
+  Built for the original EOS R5. Menu wording shifts slightly between firmware versions, and the R5 Mark II
+  uses different AF area names. Check anything critical against your own body before a paid shoot.
+  <br><button id="reset">Reset all progress</button>
+</footer>
+
+<script>
+const SECTIONS = [
+  {
+    id: "af",
+    tab: "AF",
+    name: "Autofocus",
+    color: "#D45FA6",
+    blurb:
+      "The single biggest jump from the 7D. The R5 focuses with the whole sensor, so the old 'pick a point, recompose' habits are optional now.",
+    items: [
+      {
+        id: "af-method",
+        title: "AF method (the focus area)",
+        where:
+          "Press the AF point selection button (top right, thumb side), then press M-Fn to cycle. Or AF menu → AF method.",
+        options: [
+          ["Face+Tracking (whole area)", "Default for people, pets, events. Camera finds the subject anywhere in the frame and sticks to it."],
+          ["Spot AF", "Smallest box. Eyelashes through a fence, a single flower stamen, tight macro."],
+          ["1-point AF", "Your 7D habit. Precise, predictable, no surprises. Landscapes, architecture, studio."],
+          ["Expand AF area (4 points)", "1-point with helpers above/below/left/right. Slow, predictable movement."],
+          ["Expand AF area: Around (8 points)", "Same idea, more forgiving. Erratic movement, handheld at long focal lengths."],
+          ["Zone AF", "A block you place. Camera auto-selects inside it. Keeps focus off clutter outside the block."],
+          ["Large Zone: Vertical", "Tall band. Someone walking toward you, a jumper, a portrait subject moving in depth."],
+          ["Large Zone: Horizontal", "Wide band. Runners crossing, birds in level flight, sideline sports."],
+        ],
+        tip: "Practice drill: shoot the same moving subject with Face+Tracking, then Large Zone, then 1-point. Compare keeper rates.",
+      },
+      {
+        id: "af-operation",
+        title: "AF operation — One-Shot vs Servo",
+        where: "AF menu → AF operation, or M-Fn button.",
+        options: [
+          ["One-Shot AF", "Focus locks and stays. Still subjects, focus-and-recompose, anything you want confirmed before firing."],
+          ["Servo AF", "Focus keeps updating while you hold. Anything that moves, including a subject who breathes and sways during a portrait."],
+        ],
+        tip: "No AI Focus mode here for stills — you choose. Most pros live in Servo and control it with the thumb button.",
+      },
+      {
+        id: "af-subject",
+        title: "Subject to detect + eye detection",
+        where: "AF menu → Subject to detect / Eye detection.",
+        options: [
+          ["People", "Faces, then eyes, then head, then body as the subject gets smaller or turns away."],
+          ["Animals", "Dogs, cats, birds. Finds the eye on birds in flight surprisingly well."],
+          ["Vehicles", "Cars and motorcycles; has a spot-detection option that targets the driver's helmet."],
+          ["None", "Turn detection off when you want the camera to stop jumping to a bystander's face."],
+          ["Eye detection On/Off", "Off is useful in a crowd or when a face keeps stealing focus from your real subject."],
+        ],
+        tip: "Detection is per-mode, not global. Set it, then save it into a Custom mode (C1–C3) so it's one click away.",
+      },
+      {
+        id: "af-cases",
+        title: "Servo AF cases 1–4 and Auto",
+        where: "AF menu → Servo AF characteristics (Case Auto, 1, 2, 3, 4).",
+        options: [
+          ["Case Auto", "Camera adapts. Fine starting point while you learn the others."],
+          ["Case 1 — versatile", "General purpose. Good default for events and portraits."],
+          ["Case 2 — ignore obstacles", "Subject stays in focus when something crosses in front. Sideline sports, fences, crowds."],
+          ["Case 3 — snap to nearest", "Grabs whatever enters the frame closest. Cyclists rounding a bend, start of a race."],
+          ["Case 4 — for accel/decel", "Subjects that change speed sharply. Soccer, tennis, kids."],
+        ],
+        tip: "Each case is really three sliders: tracking sensitivity, accel/decel tracking, AF point auto switching. Open one and read the sliders — then you'll understand all of them.",
+      },
+      {
+        id: "af-bbf",
+        title: "Back-button AF (decoupling focus from the shutter)",
+        where:
+          "Custom Functions → Customize buttons. Set AF-ON to 'Metering and AF start', set shutter half-press to 'Metering start' only.",
+        options: [
+          ["Thumb focuses, finger shoots", "Hold AF-ON for Servo tracking; release it and you have One-Shot behavior, no menu diving."],
+          ["Second button as a modifier", "Assign the * button to 'Switch to registered AF function' for an instant alternate setup."],
+        ],
+        tip: "This is the single habit that most separates the pros. Give yourself two weeks of awkwardness.",
+      },
+      {
+        id: "af-touchdrag",
+        title: "Touch & drag AF",
+        where: "AF menu → Touch & drag AF settings.",
+        options: [
+          ["Positioning: Absolute", "Where you touch is where the point goes. Fast, less precise."],
+          ["Positioning: Relative", "Swipe to nudge the point from where it is. Better with your eye to the finder."],
+          ["Active touch area", "Limit it to the right half or a corner so your nose doesn't move the point."],
+        ],
+        tip: "Nose-drag is the #1 complaint from DSLR converts. Fixing this takes 30 seconds.",
+      },
+      {
+        id: "af-initial",
+        title: "Initial Servo AF point for Face+Tracking",
+        where: "AF menu → Initial Servo AF pt for Face+Tracking.",
+        options: [
+          ["Auto", "Camera decides where to start looking."],
+          ["Initial AF point set for Servo AF", "You tell it where to start, then it tracks from there. Best for busy scenes."],
+          ["AF point set for the AF method", "Starts from your last manual point."],
+        ],
+        tip: "Set this and Face+Tracking stops feeling random.",
+      },
+      {
+        id: "af-mf",
+        title: "Manual focus aids",
+        where: "AF menu → MF peaking settings, Focus guide; magnify button for 5×/10×.",
+        options: [
+          ["Peaking", "Colored outline on in-focus edges. Level and color are adjustable. Video, macro, adapted lenses."],
+          ["Focus guide", "On-screen arrows telling you which way to turn and how far. Nothing like it on the 7D."],
+          ["Magnify 5×/10×", "Tripod work, astro, product. Confirm critical focus before firing."],
+          ["Focus ring direction / full-time MF", "Set in Custom Functions so RF lenses turn the way your EF lenses did."],
+        ],
+        tip: "Peaking lies wide open. Confirm with magnification when depth of field is thin.",
+      },
+      {
+        id: "af-register",
+        title: "Register and recall a whole AF setup on one button",
+        where:
+          "AF menu → Register/recall shooting func, then assign 'Switch to registered AF function' to a button.",
+        options: [
+          ["Hold to recall", "Press and hold for the alternate setup, release to return."],
+          ["Press to toggle", "Latching switch instead."],
+        ],
+        tip: "Classic use: Face+Tracking for the wide shot, hold the button for Spot AF + Case 2 when the subject gets tangled in a crowd.",
+      },
+      {
+        id: "af-orientation",
+        title: "Orientation-linked AF point",
+        where: "AF menu → Orientation linked AF point.",
+        options: [
+          ["Same for both", "One point, both orientations. Simple."],
+          ["Separate AF points: Area + point", "Camera remembers a different AF method and position for horizontal vs vertical. Portraits where the eye sits high in a vertical frame."],
+          ["Separate AF points: Point only", "Same method, different position per orientation."],
+        ],
+        tip: "If you rotate the camera constantly and keep having to move the point back, this is the fix.",
+      },
+      {
+        id: "af-limit",
+        title: "Limit AF methods",
+        where: "AF menu → Limit AF methods (uncheck what you never use).",
+        options: [
+          ["Keep three or four", "M-Fn cycles through fewer options, so you land on the one you want in one press instead of five."],
+        ],
+        tip: "Do this after a month, once you know which areas you actually reach for.",
+      },
+      {
+        id: "af-priority",
+        title: "Focus vs release priority",
+        where: "AF menu → One-Shot AF release priority / Servo 1st image priority / Servo 2nd image priority.",
+        options: [
+          ["Focus priority", "Camera won't fire until it confirms focus. Portraits, product, anything you can't reshoot out of focus."],
+          ["Release priority", "Fires whenever you press. Sports — a slightly soft frame beats a missed moment."],
+          ["Equal priority (Servo)", "Balanced. Reasonable default for events."],
+        ],
+        tip: "Servo 1st and 2nd image are separate settings. First frame focus-priority, later frames speed-priority is a common burst setup.",
+      },
+      {
+        id: "af-assist",
+        title: "AF-assist beam",
+        where: "AF menu → AF-assist beam firing (requires a Speedlite or compatible accessory).",
+        options: [
+          ["Enable", "Dark receptions and venues where the camera hunts."],
+          ["Disable", "Ceremonies, theater, wildlife — anywhere a beam on your subject is rude or spooks them."],
+          ["IR AF-assist beam only", "Uses the infrared pattern rather than a burst of visible light."],
+        ],
+      },
+    ],
+  },
+  {
+    id: "exp",
+    tab: "EXP",
+    name: "Exposure & metering",
+    color: "#E0574F",
+    blurb:
+      "Mostly familiar from the 7D — except the finder now shows you the actual exposure before you shoot.",
+    items: [
+      {
+        id: "exp-modes",
+        title: "Shooting modes, including Fv",
+        where: "Press the MODE button (there's no mode dial).",
+        options: [
+          ["P / Tv / Av / M / B", "Same as the 7D. Bulb is its own mode now instead of past 30s in M."],
+          ["Fv (Flexible priority)", "RF-only. Every parameter is either Auto or set by you, changed on the fly. Av that becomes M mid-shot without switching modes."],
+          ["C1 / C2 / C3", "Saved setups. Cover these under Controls & customization."],
+        ],
+        tip: "Fv is worth a full afternoon. It's the mode most 7D shooters never try and most R5 owners end up living in.",
+      },
+      {
+        id: "exp-metering",
+        title: "Metering modes",
+        where: "M-Fn button, or shooting menu → Metering mode.",
+        options: [
+          ["Evaluative", "Whole scene, weighted to the AF point. Default."],
+          ["Partial (~5.8%)", "Backlit subject that fills a chunk of the frame."],
+          ["Spot (~2.9%)", "Stage lighting, high-contrast portraits, moon."],
+          ["Center-weighted average", "Predictable and consistent — good when you meter once and shoot a whole series."],
+        ],
+        tip: "With exposure simulation on, metering matters less than it did on the 7D. Trust your eyes and the histogram.",
+      },
+      {
+        id: "exp-iso",
+        title: "ISO and Auto ISO limits",
+        where: "ISO button; shooting menu → ISO speed settings.",
+        options: [
+          ["Auto ISO range", "Set a ceiling you're happy printing. Many R5 shooters cap around 6400–12800."],
+          ["Minimum shutter speed", "Auto (biased slower/faster) or a hard floor. Stops Auto ISO from handing you 1/30s at 200mm."],
+          ["Auto ISO in Manual + exposure comp", "Lock aperture and shutter, let ISO float, still dial in brightness. The pro workhorse setting."],
+        ],
+        tip: "The R5 has a dual-gain sensor. Test your own tolerance from ISO 100 to 12800 once, and stop guessing.",
+      },
+      {
+        id: "exp-comp",
+        title: "Exposure compensation, AEB and AE lock",
+        where: "Quick control dial / exposure comp; shooting menu → Expo. comp./AEB.",
+        options: [
+          ["Exposure compensation", "Works in Fv and in M+Auto ISO too."],
+          ["AEB", "Up to ±3 stops across 2, 3, 5 or 7 frames. Real estate, interiors, brackets for HDR."],
+          ["AE lock (* button)", "Hold behavior and whether it holds after the shot are customizable."],
+          ["Safety shift", "Lets the camera break your Tv or Av setting rather than blow the exposure."],
+        ],
+      },
+      {
+        id: "exp-tone",
+        title: "Highlight tone priority and Auto Lighting Optimizer",
+        where: "Shooting menu → Highlight tone priority / Auto Lighting Optimizer.",
+        options: [
+          ["Highlight tone priority D+", "Protects highlights, raises base ISO to 200. Weddings — white dresses."],
+          ["D+2", "More protection, more noise in shadows."],
+          ["Auto Lighting Optimizer", "Lifts shadows in JPEG/preview. Turn it off if you're shooting RAW and metering by histogram, since it makes the preview lie."],
+        ],
+      },
+      {
+        id: "exp-simulation",
+        title: "Exposure simulation, histogram and the OVF-style view",
+        where: "INFO button cycles displays; shooting menu → Exposure simulation; Shooting info display.",
+        options: [
+          ["Exposure simulation On", "Finder shows the actual exposure. Turn it off when shooting with studio strobes or the finder goes black."],
+          ["Brightness vs RGB histogram", "RGB catches a clipped red channel that brightness misses. Skin, flowers, sunsets."],
+          ["OVF view assist", "Makes the finder behave like the 7D's optical finder. A comfort setting while you transition."],
+        ],
+      },
+      {
+        id: "exp-flicker",
+        title: "Anti-flicker shooting",
+        where: "Shooting menu → Anti-flicker shoot.",
+        options: [
+          ["On", "Times the shutter to the peak of a flickering light cycle. Gyms, arenas, LED-lit venues."],
+        ],
+        tip: "Works with the mechanical shutter. Indoor sports without it means banding and inconsistent color frame to frame.",
+      },
+    ],
+  },
+  {
+    id: "drive",
+    tab: "DRV",
+    name: "Drive, shutter & burst",
+    color: "#E39A3A",
+    blurb: "Three shutter types with real tradeoffs — this is new territory coming from a DSLR.",
+    items: [
+      {
+        id: "drv-shutter",
+        title: "Shutter mode: mechanical, EFCS, electronic",
+        where: "Shooting menu → Shutter mode.",
+        options: [
+          ["Mechanical", "Up to 12 fps. No rolling shutter, full flash sync, safest for flickering light. Loudest."],
+          ["Electronic 1st-curtain (EFCS)", "Quieter, less shutter shock. Good general default; watch for bokeh clipping at very fast speeds with fast glass."],
+          ["Electronic", "Up to 20 fps, silent. Rolling shutter skews fast pans and props; banding under artificial light; flash restricted."],
+        ],
+        tip: "Silent is a superpower at ceremonies and in courtrooms — and a trap at a gym. Learn which is which by testing both.",
+      },
+      {
+        id: "drv-drive",
+        title: "Drive modes and self-timer",
+        where: "Drive button / M-Fn.",
+        options: [
+          ["Single", "Deliberate work."],
+          ["High-speed continuous +", "Max rate. Peak action only — the buffer and your culling time are real costs."],
+          ["High / Low-speed continuous", "Low speed is underrated for portraits: catches the blink-free frame without 40 near-duplicates."],
+          ["Self-timer 10s / 2s", "2s with a tripod replaces a cable release."],
+        ],
+      },
+      {
+        id: "drv-cards",
+        title: "Dual card slots and buffer strategy",
+        where: "Setup menu → Record func+card/folder sel.",
+        options: [
+          ["Record separately", "RAW to CFexpress, JPEG to SD. Fast delivery workflow."],
+          ["Record to both", "Instant backup. Standard practice for weddings and anything unrepeatable."],
+          ["Auto switch card", "Long events, no card change."],
+        ],
+        tip: "CFexpress Type B is what unlocks deep bursts and 8K. The SD slot will bottleneck you if you shoot 20 fps RAW to it.",
+      },
+      {
+        id: "drv-interval",
+        title: "Interval timer, bulb timer, multiple exposure, HDR",
+        where: "Shooting menu → Interval timer / Bulb timer / Multiple exposure / HDR Mode.",
+        options: [
+          ["Interval timer", "Time-lapse, star trails, construction progress. No external intervalometer needed."],
+          ["Bulb timer", "Set an exact long exposure — 4 minutes, hands off."],
+          ["Multiple exposure", "In-camera compositing with live preview of the blend."],
+          ["HDR mode", "Merges brackets in camera. Useful for a fast client preview, not for final files."],
+        ],
+      },
+      {
+        id: "drv-focusbracket",
+        title: "Focus bracketing and depth compositing",
+        where: "Shooting menu → Focus bracketing (set number of shots and focus increment).",
+        options: [
+          ["Focus bracketing", "Camera steps focus through a range automatically. Macro, product, jewelry, watches."],
+          ["Depth compositing", "The R5 can merge the stack in camera for a JPEG preview; stack the RAWs properly in post."],
+        ],
+        tip: "Product photography is a good early paid niche, and this feature is most of the job.",
+      },
+    ],
+  },
+  {
+    id: "img",
+    tab: "IMG",
+    name: "Image quality & color",
+    color: "#59B3C4",
+    blurb: "Where you decide what a file is worth before you ever open it.",
+    items: [
+      {
+        id: "img-files",
+        title: "File types: RAW, CRAW, HEIF, JPEG",
+        where: "Shooting menu → Image quality.",
+        options: [
+          ["RAW", "Full 45MP, maximum latitude. Client work you'll retouch."],
+          ["CRAW", "Compressed RAW, roughly half the size, very little practical loss. Long events."],
+          ["HEIF (with HDR PQ)", "10-bit stills for HDR displays. Emerging, worth understanding early."],
+          ["RAW + JPEG", "Same-day previews with the RAW as insurance."],
+          ["Cropping / aspect ratio", "Shoot 1:1 or 16:9 with finder guides — RAW keeps the full frame."],
+        ],
+      },
+      {
+        id: "img-wb",
+        title: "White balance, custom WB and WB shift",
+        where: "WB via M-Fn; shooting menu → Custom White Balance / WB Shift/Bkt.",
+        options: [
+          ["AWB: Ambience vs White priority", "Ambience keeps the warmth of tungsten; White priority neutralizes it. Know which look the client wants."],
+          ["Kelvin", "Lock a value so a whole set matches. Essential for events under mixed light."],
+          ["Custom WB", "Shoot a gray card, register it. Product and reproduction work."],
+          ["WB shift / bracket", "Fine-tune along amber-blue and green-magenta — fixes fluorescent green casts."],
+        ],
+      },
+      {
+        id: "img-picstyle",
+        title: "Picture Styles and their parameters",
+        where: "Shooting menu → Picture Style.",
+        options: [
+          ["Standard / Portrait / Landscape / Neutral / Faithful", "Affects JPEG and the finder preview; RAW keeps the tag only."],
+          ["Fine Detail", "Sharpening tuned for high-resolution sensors — a better default on 45MP than Standard."],
+          ["Parameters", "Sharpness has three sliders now: strength, fineness, threshold. Learn what each does."],
+          ["User-defined styles", "Build your house look and register it."],
+        ],
+      },
+      {
+        id: "img-lenscorr",
+        title: "Lens aberration correction and Digital Lens Optimizer",
+        where: "Shooting menu → Lens aberration correction.",
+        options: [
+          ["Peripheral illumination / distortion / chromatic aberration", "Mostly leave on."],
+          ["Digital Lens Optimizer", "Corrects diffraction and lens softness. Note it can reduce your maximum burst rate — turn it down for sports."],
+        ],
+      },
+      {
+        id: "img-nr",
+        title: "Noise reduction settings",
+        where: "Shooting menu → High ISO noise reduction / Long exp. noise reduction.",
+        options: [
+          ["High ISO NR", "JPEG only. Multi-shot NR exists but locks out other features."],
+          ["Long exposure NR", "Dark-frame subtraction — doubles your exposure time. Astro and night work."],
+        ],
+      },
+    ],
+  },
+  {
+    id: "stab",
+    tab: "IS",
+    name: "Stabilization & lenses",
+    color: "#5BA37A",
+    blurb: "The body stabilizes now. Your EF glass still works, and the handholding rules you learned are obsolete.",
+    items: [
+      {
+        id: "stab-ibis",
+        title: "IBIS and coordinated IS",
+        where: "Shooting menu → IS (Image Stabilizer) mode; lens switch for RF/EF IS lenses.",
+        options: [
+          ["IBIS alone", "Stabilizes non-IS lenses, including adapted EF primes."],
+          ["Coordinated IS", "Body plus lens working together — up to around 8 stops with some RF lenses."],
+          ["Mode 2 / panning", "For following a moving subject horizontally."],
+          ["IS off", "Tripod work, and long exposures where IS can hunt."],
+        ],
+        tip: "Re-test your handheld limits. What used to be 1/60s at 60mm may now be a usable 1/8s.",
+      },
+      {
+        id: "stab-adapter",
+        title: "EF lenses on the R5 via adapter",
+        where: "EF-EOS R adapter (plain, control ring, or drop-in filter).",
+        options: [
+          ["Plain adapter", "Full AF and IS, no compromise. Your 7D glass covers full frame differently — check EF-S lenses crop."],
+          ["Control ring adapter", "Adds an assignable ring to every EF lens."],
+          ["Drop-in filter adapter", "Variable ND or circular polarizer behind the lens. Useful for wide glass that can't take front filters."],
+        ],
+      },
+      {
+        id: "stab-controlring",
+        title: "RF control ring and lens function button",
+        where: "Custom Functions → Customize dials / Customize buttons.",
+        options: [
+          ["Control ring", "Assign ISO, exposure comp, aperture, or shutter to the lens ring."],
+          ["Lens function button", "On L lenses — assign AF stop, register/recall, or eye detection toggle."],
+          ["Focus limiter switch", "Cuts hunting on long telephotos."],
+        ],
+      },
+    ],
+  },
+  {
+    id: "ctrl",
+    tab: "C.Fn",
+    name: "Controls & customization",
+    color: "#B98CE0",
+    blurb:
+      "This is what actually makes the camera feel like yours. Budget more time here than you think you need.",
+    items: [
+      {
+        id: "ctrl-custom-modes",
+        title: "Custom shooting modes C1, C2, C3",
+        where: "Set the camera up, then Setup menu → Custom shooting mode (C1-C3) → Register settings.",
+        options: [
+          ["C1 / C2 / C3", "Full snapshots of the camera: mode, AF, drive, ISO limits, everything."],
+          ["Auto update settings", "On means changes you make stick; off means it reverts when you leave the mode. Off is usually what you want."],
+        ],
+        tip: "A working trio: C1 = ceremony (silent, Servo, Face+Tracking, Auto ISO capped), C2 = portraits (One-Shot, eye detect, single frame), C3 = action (20 fps, Case 2, Large Zone).",
+      },
+      {
+        id: "ctrl-buttons",
+        title: "Customize buttons and dials",
+        where: "Custom Functions menu (orange tab) → Customize buttons / Customize dials.",
+        options: [
+          ["AF-ON, *, DOF preview, M-Fn, SET, multi-controller", "All reassignable, and differently for stills vs video."],
+          ["Dials", "Main dial, quick control dial 1 and 2, control ring — assign per shooting mode."],
+          ["Movie shooting button", "Can become a stills function if you never shoot video."],
+        ],
+        tip: "Write down your assignments. Six months from now you won't remember why the DOF button does something odd.",
+      },
+      {
+        id: "ctrl-mymenu",
+        title: "My Menu and Quick Control screen",
+        where: "Green My Menu tab → Add My Menu tab; Q button → customize layout.",
+        options: [
+          ["My Menu tabs", "Up to five tabs of the settings you actually change. Ends menu diving."],
+          ["Quick Control customization", "Rearrange or remove tiles on the Q screen."],
+        ],
+      },
+      {
+        id: "ctrl-evf",
+        title: "Viewfinder and display behavior",
+        where: "Setup menu → Display performance, Viewfinder display format, Eco mode; INFO to cycle overlays.",
+        options: [
+          ["Smooth vs Power saving", "Smooth = 120fps finder, better for tracking action. Power saving = more battery."],
+          ["Display simulation", "Whether the finder shows exposure, depth of field, or both."],
+          ["Eyepiece detection", "Stop the screen and finder swapping when you don't want it to."],
+          ["Level, grid, histogram overlays", "Set these once — an electronic level is free and you had to buy one for the 7D."],
+        ],
+      },
+      {
+        id: "ctrl-save",
+        title: "Save and load camera settings to a card",
+        where: "Setup menu → Save/load settings on card.",
+        options: [
+          ["Save", "Back up your whole configuration after you've dialed it in."],
+          ["Load", "Restore in seconds after a reset, or clone the setup to a second body."],
+        ],
+        tip: "Do this the moment you finish this checklist. It's your insurance policy.",
+      },
+      {
+        id: "ctrl-safety",
+        title: "Safety nets — the small settings that prevent disasters",
+        where: "Setup menu → Release shutter w/o card; Custom Functions → dial direction, touch control; Setup → Beep; LOCK switch settings.",
+        options: [
+          ["Release shutter without card: OFF", "The camera refuses to fire with no card in it. Shooting an entire session onto nothing is a mistake photographers only make once."],
+          ["Dial direction during Tv/Av", "Reverse it if the R5 turns the opposite way from your 7D muscle memory."],
+          ["Touch control: disable", "Gloves, rain, or a nose that keeps changing your settings."],
+          ["Beep: off", "Ceremonies, newborns, wildlife. Also just more professional-looking."],
+          ["Multi-function lock (LOCK switch)", "Choose exactly which dials it freezes so you stop bumping ISO while the camera hangs at your side."],
+        ],
+        tip: "Fifteen minutes here. Each one of these maps to a specific way a shoot goes wrong.",
+      },
+    ],
+  },
+  {
+    id: "flash",
+    tab: "FL",
+    name: "Light & flash",
+    color: "#E3C43A",
+    blurb: "No pop-up flash on this body — which pushes you toward better light anyway.",
+    items: [
+      {
+        id: "flash-sync",
+        title: "Sync speed and shutter type interaction",
+        where: "Hot shoe / external flash; Shutter mode affects what's available.",
+        options: [
+          ["Mechanical shutter", "X-sync around 1/200s."],
+          ["Electronic 1st-curtain", "X-sync around 1/250s."],
+          ["Electronic shutter", "Flash is heavily restricted — plan around it."],
+          ["High-speed sync (HSS)", "Sync above X-sync at the cost of flash power. Outdoor portraits at f/1.4 in daylight."],
+        ],
+        tip: "Verify these on your own body and firmware before a paid shoot. Confirming a spec takes two minutes; missing a shot doesn't get undone.",
+      },
+      {
+        id: "flash-control",
+        title: "Flash function settings and wireless",
+        where: "Shooting menu → External Speedlite control (appears when a flash is mounted).",
+        options: [
+          ["E-TTL II vs Manual", "TTL for run-and-gun receptions; manual for controlled, repeatable light."],
+          ["FEL (flash exposure lock)", "Meter the flash off your subject, then recompose."],
+          ["Flash exposure compensation", "Separate from ambient exposure comp — this is the balance dial for flash-plus-daylight."],
+          ["Wireless (radio/optical)", "Off-camera groups and ratios controlled from the camera."],
+        ],
+      },
+    ],
+  },
+  {
+    id: "vid",
+    tab: "VID",
+    name: "Video",
+    color: "#7FA8E0",
+    blurb: "Optional for a stills career — but video work is where a lot of the money is.",
+    items: [
+      {
+        id: "vid-quality",
+        title: "Recording quality and heat management",
+        where: "Movie menu → Movie rec. quality; Setup → Auto power off temp.",
+        options: [
+          ["8K RAW / 8K", "Maximum quality, huge files, heat limits. CFexpress required."],
+          ["4K HQ", "Oversampled from 8K. The sharpest practical 4K this camera makes."],
+          ["4K standard", "Longer records, less heat."],
+          ["4K 120p", "Slow motion, no audio, cropping and AF caveats."],
+        ],
+        tip: "Know your real record times before you promise a client an unbroken take.",
+      },
+      {
+        id: "vid-log",
+        title: "Canon Log 3, HDR PQ and view assist",
+        where: "Movie menu → Canon Log settings.",
+        options: [
+          ["Canon Log 3", "Flat profile with more dynamic range for grading. Requires a color workflow in post."],
+          ["View assist", "Shows a corrected preview so log footage doesn't look broken while shooting."],
+          ["HDR PQ", "Delivers HDR directly with no grade."],
+        ],
+      },
+      {
+        id: "vid-af-audio",
+        title: "Movie Servo AF and audio",
+        where: "Movie menu → Movie Servo AF (speed, tracking sensitivity); Sound recording.",
+        options: [
+          ["AF speed", "Slow it down so focus pulls look intentional rather than snappy."],
+          ["Tracking sensitivity", "Low keeps focus on your subject when someone walks through frame."],
+          ["Manual audio levels + headphone jack", "Set levels by meter, monitor with headphones. Auto levels pump."],
+        ],
+      },
+    ],
+  },
+  {
+    id: "play",
+    tab: "PLAY",
+    name: "Playback & culling",
+    color: "#4FC4B0",
+    blurb:
+      "Half of professional speed is deciding what's a keeper before you get home. The blue playback tab is where that happens.",
+    items: [
+      {
+        id: "play-rating",
+        title: "Rating and protecting images in camera",
+        where: "Playback menu → Rating; or assign Rating to a button in Custom Functions. Protect images is in the same menu.",
+        options: [
+          ["1–5 stars", "Ratings travel in the file's metadata straight into Lightroom, Capture One or DPP. Cull once, not twice."],
+          ["Protect", "Locks a frame against accidental erase and against format-adjacent mistakes."],
+          ["Rate between sets", "Five minutes while the client changes outfits saves an hour that night."],
+        ],
+        tip: "Pick a system and never change it. Common one: 1 star = maybe, 2 = deliver, 3 = portfolio.",
+      },
+      {
+        id: "play-check",
+        title: "Highlight alert, histogram and focus check",
+        where: "Playback menu → Highlight alert, Playback information display; magnify button during playback.",
+        options: [
+          ["Highlight alert (blinkies)", "Blown areas flash. The fastest read on whether you've clipped a white dress or a sky."],
+          ["RGB histogram in playback", "Catches a clipped red channel in skin or a sunset that the brightness histogram hides."],
+          ["Magnification setting", "Set it to jump straight to the AF point at high magnification, so one press confirms the eye is sharp."],
+          ["AF point display in playback", "Shows where the camera actually focused. Diagnostic gold while you learn the AF system."],
+        ],
+        tip: "Checking focus on the back screen at fit-to-screen size tells you nothing at 45MP. Magnify or don't bother.",
+      },
+      {
+        id: "play-search",
+        title: "Jump, search and client review",
+        where: "Playback menu → Image jump w/ dial, Set image search conditions.",
+        options: [
+          ["Image jump", "Skip by 10, 100, date, folder, or rating. Finding one frame out of three thousand."],
+          ["Image search conditions", "Filter playback to only 3-star frames, or only stills, before you hand the camera over."],
+          ["Slide show", "Reviewing on a TV or showing a client on set."],
+        ],
+      },
+      {
+        id: "play-cards",
+        title: "Erase, format and card discipline",
+        where: "Playback menu → Erase images; Setup menu → Format card.",
+        options: [
+          ["Format in camera before every shoot", "Not 'erase all'. Format. It rebuilds the file structure the camera expects."],
+          ["Never delete individual frames on the card mid-shoot", "It fragments the card and it's how people delete the wrong file under pressure."],
+          ["Low-level format occasionally", "Slower, but clears a card that's been getting sluggish."],
+          ["Offload before you format", "Two copies existing somewhere else, verified, then format. No exceptions."],
+        ],
+        tip: "Every photographer who has lost a job's files formatted a card they thought they'd already copied.",
+      },
+    ],
+  },
+  {
+    id: "flow",
+    tab: "SET",
+    name: "Workflow & connectivity",
+    color: "#9BA3AA",
+    blurb: "The unglamorous half of being a professional. Clients notice it more than they notice your bokeh.",
+    items: [
+      {
+        id: "flow-wireless",
+        title: "Wi-Fi, Bluetooth and Camera Connect",
+        where: "Wireless menu → Wi-Fi/Bluetooth connection.",
+        options: [
+          ["Camera Connect app", "Transfer selects to your phone for same-day social delivery."],
+          ["Remote shooting", "Phone as a remote with live view and touch focus."],
+          ["Browser Remote / EOS Utility", "Tethering for studio and product work."],
+          ["FTP transfer", "Sending files straight from camera to a server. Sports and press workflow."],
+        ],
+      },
+      {
+        id: "flow-metadata",
+        title: "Copyright, file naming and folders",
+        where: "Setup menu → Copyright information / File name / Select folder.",
+        options: [
+          ["Copyright + author", "Embedded in every file. Do this once, today."],
+          ["Custom file naming", "Prefix files with your initials or the job code so two bodies never collide."],
+          ["Folder per shoot", "Keeps card offloads sane."],
+        ],
+      },
+      {
+        id: "flow-firmware",
+        title: "Firmware, cleaning and body care",
+        where: "Setup menu → Firmware / Sensor cleaning.",
+        options: [
+          ["Firmware updates", "Canon has added real features to this body over time. Check before big jobs, never the night before one."],
+          ["Sensor cleaning", "The sensor sits exposed when you swap lenses. Learn wet cleaning or budget for servicing."],
+          ["Battery discipline", "LP-E6NH, and the R5 eats them faster than the 7D did. Three minimum for paid work."],
+        ],
+      },
+    ],
+  },
+  {
+    id: "drills",
+    tab: "DRILLS",
+    name: "Practice drills",
+    color: "#EDEAE3",
+    whereLabel: "The setup",
+    optionsLabel: "How to run it",
+    blurb:
+      "Knowing a setting isn't the same as reaching it without thinking. These are the reps. Each one is a single session.",
+    items: [
+      {
+        id: "drill-afarea",
+        title: "Drill 1 — AF area shootout",
+        where: "One moving subject, consistent light, about 100 frames. A dog, a sibling on a bike, or rowers coming down the course.",
+        options: [
+          ["Run A", "Face+Tracking, Servo, Case Auto. 30 frames."],
+          ["Run B", "Large Zone Horizontal, Servo, Case 2. 30 frames."],
+          ["Run C", "1-point AF, Servo, Case 1. 30 frames."],
+          ["Score it", "Count sharp-at-100% frames per run. Write the numbers down. That ratio is your real answer, not anyone's opinion online."],
+        ],
+        tip: "Repeat this after two months. The numbers will move, and that's how you know you're improving.",
+      },
+      {
+        id: "drill-bbf",
+        title: "Drill 2 — Back-button AF conversion week",
+        where: "Set it up, then don't switch back for seven days. Everything you shoot, all week.",
+        options: [
+          ["Days 1–2", "It will feel wrong and you'll miss shots. Expected."],
+          ["Days 3–5", "Thumb starts moving on its own."],
+          ["Days 6–7", "Try a moving subject and a still one in the same session, without changing any menu setting."],
+        ],
+        tip: "The failure mode is switching back on day 2 for 'an important shoot'. Schedule the week when nothing matters.",
+      },
+      {
+        id: "drill-iso",
+        title: "Drill 3 — Find your own ISO ceiling",
+        where: "One static scene with shadow detail and a face. Tripod. Shoot ISO 100 through 12800, one frame per stop.",
+        options: [
+          ["Edit them", "Take each to a finished state the way you normally would."],
+          ["View at 100%", "Then view them printed or on a full screen, not on your phone."],
+          ["Pick the line", "Where does it stop being acceptable for paid work? That number is your Auto ISO cap."],
+        ],
+        tip: "Everyone quotes a number they read. Yours will be different, and knowing it means you stop hesitating in dark rooms.",
+      },
+      {
+        id: "drill-onefocal",
+        title: "Drill 4 — One focal length, 200 frames",
+        where: "Tape your 24-105 at a single focal length. 35mm one week, 85mm the next. Don't zoom.",
+        options: [
+          ["Why", "Zooms let you avoid composing with your feet. This forces it."],
+          ["What to watch", "How the same subject changes character at 24 vs 105 — compression, distortion, how close you have to stand."],
+        ],
+        tip: "This is a composition drill disguised as a lens drill. It's the one most likely to make your photos better.",
+      },
+      {
+        id: "drill-modes",
+        title: "Drill 5 — Custom mode reflex test",
+        where: "Once C1/C2/C3 are configured. Have someone call out scenarios: 'ceremony', 'action', 'portrait'.",
+        options: [
+          ["Target", "Correct mode, correct AF area, correct drive setting, shutter pressed — in under three seconds."],
+          ["Then do it in the dark", "Because half of event work happens in bad light while you're walking."],
+        ],
+      },
+      {
+        id: "drill-delivery",
+        title: "Drill 6 — Full delivery simulation",
+        where: "Shoot 300 frames of something real. Then cull to 20 and finish 10, on a two-hour clock.",
+        options: [
+          ["Cull in camera first", "Rate as you shoot using the playback drill above."],
+          ["Then the edit", "Consistent color and crop across all ten. Consistency is what clients are actually paying for."],
+          ["Deliver it", "To a real person, in a gallery or folder, with a filename convention."],
+        ],
+        tip: "Do this before your first paid job, not during it. Speed under a deadline is a separate skill from taking a good photo.",
+      },
+    ],
+  },
+  {
+    id: "pro",
+    tab: "PRO",
+    name: "Going professional",
+    color: "#C29B5E",
+    whereLabel: "What it is",
+    optionsLabel: "What to work through",
+    blurb:
+      "The camera is maybe a third of the job. This half is what separates people who shoot well from people who get paid.",
+    items: [
+      {
+        id: "pro-backup",
+        title: "A backup system you actually follow",
+        where: "The 3-2-1 rule: three copies, on two kinds of media, one of them off-site.",
+        options: [
+          ["On the shoot", "Record to both cards. That's copy one and two."],
+          ["Same night", "Offload to a drive and verify the files open before you touch the card."],
+          ["Off-site", "Cloud or a second drive somewhere else. Fire, theft, and dropped laptops are all real."],
+          ["Test a restore", "A backup you've never restored from is a theory."],
+        ],
+        tip: "Losing client files is one of the few mistakes that ends a young photographer's reputation locally.",
+      },
+      {
+        id: "pro-edit",
+        title: "An editing workflow and a calibrated screen",
+        where: "Lightroom, Capture One, or Canon's free DPP. Plus a monitor you can trust.",
+        options: [
+          ["Pick one program and learn it deeply", "Switching tools is procrastination in a productive costume."],
+          ["Build presets from your own work", "A consistent look is a brand. Random per-image editing isn't."],
+          ["Calibrate the display", "An uncalibrated laptop screen means you're delivering colors you've never seen."],
+          ["Export settings", "Know your sRGB-for-web vs Adobe RGB-for-print pipeline before a client asks."],
+        ],
+      },
+      {
+        id: "pro-paper",
+        title: "Contracts, releases and getting paid",
+        where: "Before the first paid job, not after a dispute.",
+        options: [
+          ["A written contract", "Deliverables, timeline, payment terms, usage rights, cancellation. Templates exist; adapt one."],
+          ["Model release", "Required for anything you'll use commercially. Extra care and a parent or guardian's signature for anyone under 18."],
+          ["Deposit up front", "Standard practice, usually 25–50%. It filters out people who were never going to pay."],
+          ["Invoices and records", "Keep them from job one. Tax rules for self-employment income apply even at small amounts, and vary by where you live."],
+        ],
+        tip: "Worth a conversation with an adult who runs a business, or an accountant, before you take money.",
+      },
+      {
+        id: "pro-pricing",
+        title: "Pricing that isn't a guess",
+        where: "Start from your costs, not from what someone else charges.",
+        options: [
+          ["Cost of doing business", "Gear replacement, insurance, software, drives, travel, and your unpaid editing hours. Divide by realistic jobs per year."],
+          ["Day rate vs per-image vs package", "Different markets expect different structures. Learn what yours does."],
+          ["Don't undercut to compete", "Cheap attracts clients who treat you as cheap, and it's hard to raise later."],
+          ["Free work, chosen deliberately", "Fine for building a portfolio in a niche you want. Not fine as an ongoing business model."],
+        ],
+      },
+      {
+        id: "pro-portfolio",
+        title: "A portfolio and a niche",
+        where: "Twenty excellent images in one category beats two hundred good ones across ten.",
+        options: [
+          ["Pick a lane first", "Sports, portraits, events, products, real estate. Depth reads as expertise; breadth reads as a hobby."],
+          ["Show only your best", "Your portfolio is judged by its weakest image, not its strongest."],
+          ["Personal projects", "The work you make unpaid is what attracts the work you want paid."],
+          ["Somewhere to send people", "A simple site with your work, what you shoot, and how to contact you."],
+        ],
+      },
+      {
+        id: "pro-start",
+        title: "How people actually start",
+        where: "Almost nobody's first job is a solo booking.",
+        options: [
+          ["Assist or second-shoot", "You get paid to watch someone experienced handle real pressure. The fastest education available."],
+          ["Shoot what's already around you", "Teams, school events, local businesses, community groups. Access is an advantage — use the one you have."],
+          ["Insurance and a backup body", "Before you take responsibility for an unrepeatable event. Gear fails; clients don't care why."],
+          ["Say yes carefully", "Turning down a job you're not ready for protects the reputation you're building."],
+        ],
+        tip: "Reach out to a working photographer nearby and ask to carry bags for a day. Most say yes more often than people expect.",
+      },
+    ],
+  },
+];
+
+const KEY = 'r5-checklist-progress';
+let done = {};
+try { done = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) { done = {}; }
+
+let active = SECTIONS[0].id;
+let filter = 'all';
+let open = null;
+
+const TOTAL = SECTIONS.reduce((n,s)=>n+s.items.length,0);
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch(e) {} };
+const section = () => SECTIONS.find(s => s.id === active);
+const doneCount = () => SECTIONS.reduce((n,s)=>n+s.items.filter(i=>done[i.id]).length,0);
+
+function toggle(id){
+  if (done[id]) delete done[id]; else done[id] = 1;
+  save(); render();
+}
+
+function renderMeter(){
+  const n = doneCount();
+  const lit = Math.round((n/TOTAL)*40);
+  $('meter').innerHTML = Array.from({length:40}, (_,i) =>
+    `<i class="${i%5===0?'major':'minor'}${i<lit?' lit':''}"></i>`).join('');
+  $('meterCount').textContent = n + ' / ' + TOTAL + ' learned';
+  $('meterPct').textContent = Math.round((n/TOTAL)*100) + '%';
+}
+
+function renderTabs(){
+  $('tabs').innerHTML = SECTIONS.map(s=>{
+    const n = s.items.filter(i=>done[i.id]).length;
+    const cls = s.id===active ? 'active' : (n===s.items.length ? 'complete' : '');
+    return `<button class="dsp ${cls}" data-sec="${s.id}" ${s.id===active||n===s.items.length?`style="--accent:${s.color}"`:''}>${esc(s.tab)}<span class="mono">${n}/${s.items.length}</span></button>`;
+  }).join('');
+}
+
+function renderList(){
+  const s = section();
+  const items = s.items.filter(i => filter==='all' ? true : filter==='todo' ? !done[i.id] : !!done[i.id]);
+  if (!items.length){
+    $('list').innerHTML = `<div class="empty">${filter==='todo'
+      ? "Nothing left here. Pick another tab, or go shoot something with what you just learned."
+      : "Nothing checked off in this section yet. Open an item and start with the first one."}</div>`;
+    return;
+  }
+  $('list').innerHTML = items.map(item=>{
+    const isDone = !!done[item.id], isOpen = open===item.id;
+    const unit = s.optionsLabel ? 'steps' : 'settings';
+    let detail = '';
+    if (isOpen){
+      detail = `<div class="detail">
+        <div class="whereBox">
+          <div class="lbl dsp accent">${esc(s.whereLabel || 'Where to change it')}</div>
+          <div>${esc(item.where)}</div>
+        </div>
+        <div class="lbl dsp muted">${esc(s.optionsLabel || 'Options and when to use them')}</div>
+        ${item.options.map(o=>`<div class="opt"><div class="n">${esc(o[0])}</div><div class="u">${esc(o[1])}</div></div>`).join('')}
+        ${item.tip ? `<div class="tip">${esc(item.tip)}</div>` : ''}
+        <button class="markBtn dsp" data-tick="${item.id}">${isDone?'Mark as not learned':'Mark as learned'}</button>
+      </div>`;
+    }
+    return `<div class="card ${isDone?'done':''} ${isOpen?'open':''}" style="--accent:${s.color}">
+      <div class="row">
+        <button class="tickBtn" data-tick="${item.id}" aria-label="${isDone?'Mark as not learned':'Mark as learned'}">
+          <span class="tick">${isDone?'&#10003;':''}</span>
+        </button>
+        <button class="titleBtn" data-open="${item.id}">
+          <span class="t">${esc(item.title)}</span>
+          <span class="sub mono">${item.options.length} ${unit} &middot; ${isOpen?'tap to close':'tap to open'}</span>
+        </button>
+      </div>
+      ${detail}
+    </div>`;
+  }).join('');
+}
+
+function render(){
+  const s = section();
+  document.documentElement.style.setProperty('--accent', s.color);
+  $('secName').textContent = s.name;
+  $('secBlurb').textContent = s.blurb;
+  $('secCount').textContent = s.items.filter(i=>done[i.id]).length + '/' + s.items.length;
+  renderMeter(); renderTabs(); renderList();
+}
+
+document.addEventListener('click', e=>{
+  const t = e.target.closest('[data-tick]');
+  if (t) return toggle(t.dataset.tick);
+  const o = e.target.closest('[data-open]');
+  if (o){ open = open===o.dataset.open ? null : o.dataset.open; return render(); }
+  const sec = e.target.closest('[data-sec]');
+  if (sec){ active = sec.dataset.sec; open = null; window.scrollTo({top:0}); return render(); }
+  const f = e.target.closest('.filters button');
+  if (f){
+    filter = f.dataset.f;
+    document.querySelectorAll('.filters button').forEach(b=>b.classList.toggle('on', b===f));
+    return renderList();
+  }
+  if (e.target.id==='reset'){
+    if (confirm('Clear every checkmark? This cannot be undone.')){ done={}; save(); render(); }
+  }
+});
+
+render();
+
+if ('serviceWorker' in navigator){
+  window.addEventListener('load', ()=> navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>

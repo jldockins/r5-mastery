@@ -1,0 +1,16 @@
+{
+  "name": "Canon R5 Mastery",
+  "short_name": "R5 Mastery",
+  "description": "A checklist for learning every feature of the Canon EOS R5.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#141618",
+  "theme_color": "#141618",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
